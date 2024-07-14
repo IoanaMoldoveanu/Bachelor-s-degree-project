@@ -1,0 +1,244 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Autentificare</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=GFS Didot' rel='stylesheet'>
+    <style>
+        body {
+            box-sizing: border-box;
+            overflow-y: scroll;
+            background: transparent;
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: rgb(27, 27, 27);
+            transition: 0.5s ease;
+        }
+
+        a:hover {
+            color: #cbcdcd;
+        }
+
+        .login-btn-container {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            z-index: 999; 
+            font-family: 'GFS Didot';
+           
+        }
+
+        .login-btn, .register-btn {
+            display: inline-block;
+            padding: 12.5px 15px;
+            margin-right: 10px;
+            border: 0px solid rgb(255, 255, 255);
+            border-radius: 2px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .login-btn:hover, .register-btn:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 10%;
+            left: 3%;
+        }
+
+        .dropbtn {
+            background-color: white;
+            color: black;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 4;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            z-index: 4;
+            font-family: 'GFS Didot';
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: white;
+        }
+
+        .dropbtn::before, .dropbtn::after {
+            content: "";
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: black;
+            margin: 0 auto;
+            margin-top: -8px;
+        }
+
+        .dropbtn::after {
+            margin-top: 8px;
+        }
+        #login {
+            font-family: 'GFS Didot';
+            position: absolute;
+            top: 62.5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            color: black;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .field-wrap {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            background-color: white;
+            border: 2px solid black;
+            color: black;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #f1f1f1;
+        }
+
+        .forgot {
+            margin-top: 10px;
+        }
+
+        .forgot a {
+            color: black;
+        }
+
+    
+    </style>
+</head>
+<body>
+    <img src="/media/s1.jpg" alt="Uploaded Image" style="position: absolute; top: 23%; left: 0; width: 100%; height: 100%; background-color: grey;">
+    <img src="/media/llogo.png" alt="Uploaded Image" style="position: absolute; top: 0; left: 67%; width: 30%; height: 22%; ">
+  
+    <div class="login-btn-container">
+        <a class="login-btn" href="/login/">Log In</a>
+        <a class="register-btn" href="/register/">Register</a>
+    </div>
+
+    <div class="dropdown">
+        <button class="dropbtn"></button>
+        <div class="dropdown-content">
+            <a href="/">Home</a>
+            <a href="/prices">Preturi</a>
+            <a href="/app">Programari</a>
+            <a href="/employee/">Angajati</a>
+            <a href="/contact">Contact</a>
+            
+        </div>
+    </div>
+
+    <div id="login">
+        <h1>Bine ai revenit!</h1>
+        <form action="/login/" method="post">
+            {% csrf_token %}
+            <div class="field-wrap">
+                <label>
+                    Adresa de mail<span class="req">*</span>
+                </label>
+                <input type="email" required autocomplete="off" name="email"/>
+            </div>
+            
+            <div class="field-wrap">
+                <label>
+                    Parola<span class="req">*</span>
+                </label>
+                <input type="password" required autocomplete="off" name="password"/>
+            </div>
+            
+
+            
+            <button type="submit" class="button button-block">Log In</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.dropdown').hover(function(){
+                $('.dropdown-content').css('display', 'block');
+            }, function(){
+                $('.dropdown-content').css('display', 'none');
+            });
+        });
+    </script>
+</body>
+</html>
+

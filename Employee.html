@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angajati</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=GFS Didot' rel='stylesheet'>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        *{
+            margin:0;
+            padding: 0;
+            box-sizing: border-box;
+            
+            
+        }
+        body{
+            box-sizing: border-box;
+            overflow-y: scroll;
+            background: transparent;
+            font-family: 'Titillium Web', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            
+        }
+        .slide-container {
+            top: 120px;
+            max-width: 1120px;
+            width: 100%;
+            padding: 40px 0;
+        }
+        .slide-content{
+            margin:0 40px;
+            overflow: hidden;
+            border-radius: 25px;
+        }
+        .card{
+            border-radius: 25px;
+            background-color: #fff;
+        }
+        .image-content,
+        .card-content{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding:10px 14px;
+        }
+        .card-content{
+            height: 210px;
+        }
+        .image-content{
+            position: relative;
+            row-gap: 5px;
+            padding: 25px 0;;
+        }
+        .overlay{
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background-color: gray;
+            border-radius: 25px 25px 25px 25px;
+        }
+      
+        .overlay::after{
+            border-radius: 0 25px 0 0;
+            background-color: #fff;
+        }
+        .card-image{
+            position: relative;
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            background:#fff;
+            padding: 3px;
+        }
+        .card-image .card-img{
+            height:100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #3c3c3c;
+        }
+        .name{
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+        }
+        .description{
+            font-size: 14px;
+            color: #707070;
+            text-align: center;
+        }
+        .button{
+            border:none;
+            font-size: 16px;
+            color:#fff;
+            padding: 8px 16px;
+            background-color: #000000;
+            border-radius: 6px;
+            margin: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .button:hover{
+            background: #828282;
+        }
+        .swiper-navBtn{
+            color: #3c3c3c;
+            transition: color 0.3s ease;
+        }
+        .swiper-navBtn:hover{
+            color: #3c3c3c;
+        }
+        .swiper-navBtn::before,
+        .swiper-navBtn::after{
+            font-size: 35px;
+        }
+        .swiper-button-next{
+            right: 0;
+        }
+        .swiper-button-prev{
+            left: 0;
+        }
+        .swiper-pagination-bullet{
+            background-color: #000000;
+            opacity: 1;
+        }
+        .swiper-pagination-bullet-active{
+            background-color: #fff;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+            border-radius: 10px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .gallery img {
+            width: 100%;
+            margin: 5px 0;
+        }
+
+
+    .login-btn-container {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            z-index: 999; 
+            font-family: 'GFS Didot';
+           
+        }
+
+        .login-btn, .register-btn {
+    display: inline-block;
+    padding: 12.5px 15px;
+    margin-right: 10px;
+    border: 0px solid rgb(255, 255, 255);
+    border-radius: 2px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    color: black; 
+    text-decoration: none;
+}
+
+
+        .login-btn:hover, .register-btn:hover {
+            background-color: #f1f1f1;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            padding: 12.5px 15px;
+            margin-right: 10px;
+            border: 0px solid rgb(255, 255, 255);
+            border-radius: 2px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 25px;
+            font-weight: bold;
+            
+        }
+
+        .logout-btn:hover {
+            background-color: #f1f1f1;
+        }
+
+        .icon {
+            position: absolute;
+            top:11.6%;
+            left:20.5%;
+        }
+
+        .account-icon {
+            width: 30px; 
+            height: auto; 
+            
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 10%;
+            left: 3%;
+        }
+
+        .dropbtn {
+            background-color: white;
+            color: black;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 4;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            border-radius: 5px;
+            font-family: 'GFS Didot';
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            z-index: 4;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: white;
+        }
+
+        .dropbtn::before, .dropbtn::after {
+            content: "";
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: black;
+            margin: 0 auto;
+            margin-top: -8px;
+        }
+
+        .dropbtn::after {
+            margin-top: 8px;
+        }
+        a {
+            text-decoration: none;
+            color: rgb(27, 27, 27);
+            transition: 0.5s ease;
+        }
+
+        a:hover {
+            color: #cbcdcd;
+        }
+
+        img[src="/media/s1.jpg"] {
+            position: absolute;
+            top: 23%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: grey;
+        }
+
+        img[src="/media/llogo.png"] {
+            position: absolute;
+            top: 0;
+            left: 67%;
+            width: 30%;
+            height: 22%;
+        }
+
+        @media only screen and (max-width:1231px){
+            .login-btn-container {
+                top: 8%;
+                left: 12%;
+                font-size: 18px;
+            }
+
+            .login-btn, .register-btn {
+                padding: 10px 12px;
+                font-size: 23px;
+                margin-right: 2px;
+            }
+
+            .dropdown {
+                top: 8.3%;
+                left: 2%;
+            }
+
+            .dropbtn {
+                padding: 12px;
+                font-size: 14px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .slide-content{
+                margin: 0 10px;
+            }
+            .swiper-navBtn{
+                display: none;
+            }
+
+            #text-box {
+                top: 60%;
+                padding: 15px;
+            }
+
+            img[src="/media/llogo.png"] {
+                width: 40%;
+                height: auto;
+                top: 2%;
+                left: 61.8%;
+            }
+
+            img[src="/media/s1.jpg"] {
+                top: 18%;
+                height: 82%;
+                
+            }
+        }
+
+        @media only screen and (max-width:764px){
+            .login-btn-container {
+                top: 8%;
+                left: 12%;
+                font-size: 18px;
+            }
+
+            .login-btn, .register-btn {
+                padding: 10px 12px;
+                font-size: 23px;
+                margin-right: 2px;
+            }
+
+            .dropdown {
+                top: 8.3%;
+                left: 2%;
+            }
+
+            .dropbtn {
+                padding: 12px;
+                font-size: 14px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .slide-content{
+                margin: 0 10px;
+            }
+            .swiper-navBtn{
+                display: none;
+            }
+
+            #text-box {
+                top: 60%;
+                padding: 15px;
+            }
+
+            img[src="/media/llogo.png"] {
+                width: 40%;
+                height: auto;
+                top: 5%;
+                left: 61.8%;
+            }
+
+            img[src="/media/s1.jpg"] {
+                top: 18%;
+                height: 82%;
+                
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .login-btn-container {
+                top: 7,3%;
+                left: 12%;
+                font-size: 18px;
+            }
+
+            .login-btn, .register-btn {
+                padding: 8px 10px;
+                font-size: 20px;
+                
+            }
+
+            .dropdown {
+                top: 8%;
+                left: 3%;
+            }
+
+            .dropbtn {
+                padding: 10px;
+                font-size: 12px;
+                width: 32px;
+                height: 30px;
+            }
+
+            .slide-content{
+                margin: 0 10px;
+            }
+            .swiper-navBtn{
+                display: none;
+            }
+
+            #text-box {
+                top: 55%;
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            img[src="/media/llogo.png"] {
+                width: 39%;
+                height: auto;
+                top: 6%;
+                left: 82%;
+                transform: translateX(-50%);
+            }
+
+            img[src="/media/s1.jpg"] {
+                top: 18%;
+                height: 82%;
+                
+            }
+        }
+        
+
+    </style>
+</head>
+<body>
+    <img src="/media/s1.jpg" alt="Uploaded Image">
+    <img src="/media/llogo.png" alt="Uploaded Image">
+    <div class="login-btn-container">
+        {% if request.user.is_authenticated %}
+           <a class="logout-btn" href="/logout/">Log Out</a>
+        {% else %}
+           <a class="login-btn" href="/login/">Log In</a>
+           <a class="register-btn" href="/register/">Register</a>
+        {% endif %}
+    </div>
+
+    <div class="icon">
+      {% if request.user.is_authenticated %}
+                <img class="account-icon" src="/media/accounticon.png" alt="Account Icon">
+      {% endif %}
+    </div>
+    
+      <div class="dropdown">
+        <button class="dropbtn"></button>
+        <div class="dropdown-content">
+          <a href="/">Home</a>
+          <a href="/prices/">Preturi</a>
+          <a href="/app/">Programari</a>
+          <a href="/employee/">Angajati</a>
+          {% if request.user.is_authenticated %}
+          <a href="/offers/">Oferte</a>
+          <a href="/accounts/">Cont</a>
+      {% endif %}
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+
+     <div class="slide-container swiper">
+        <div class="slide-content">
+            <div class="card-wrapper swiper-wrapper">
+                <div class="card swiper-slide">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="/media/stilist1.jpg" alt="" class="card-img">
+                            </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Elena Popescu</h2>
+                        <p class="description">Elena Popescu aduce un suflu proaspăt în fiecare tunsoare și coafură pe care o creează. Cu o atenție deosebită la detalii și o abilitate incredibilă de a înțelege dorințele clientelor, Elena este cunoscută pentru transformările sale elegante și sofisticate.</p>
+
+                        <button class="button"  onclick="openModal('gallery1')">Vezi munca</button>
+                    </div>
+                </div>
+                <div class="card swiper-slide">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="/media/stilist2.jpg" alt="" class="card-img">
+                            </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Mara Ionescu</h2>
+                        <p class="description">Mara Ionescu este o artistă desăvârșită în domeniul coafurii, cu peste 10 ani de experiență în crearea unor stiluri unice și moderne. Pasiunea ei pentru păr și creativitatea sa nelimitată o fac să fie preferata multor cliente care caută o transformare spectaculoasă.</p>
+
+                        <button class="button"  onclick="openModal('gallery2')">Vezi munca</button>
+                    </div>
+                </div>
+                <div class="card swiper-slide">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="/media/stilist3.avif" alt="" class="card-img">
+                            </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Sorina Dobre</h2>
+                        <p class="description">Sorina Dobre este cunoscută pentru abordarea sa inovatoare și tehnicile avansate de coafură. Mereu la curent cu ultimele tendințe, Sorina reușește să ofere fiecărei cliente un look personalizat, care să-i pună în valoare trăsăturile unice.</p>
+
+                        <button class="button"  onclick="openModal('gallery3')">Vezi munca</button>
+                    </div>
+                </div>
+                <div class="card swiper-slide">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="/media/stilist4.webp" alt="" class="card-img">
+                            </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Claudia Vasile</h2>
+                        <p class="description">Claudia Vasile are un talent deosebit pentru a crea coafuri ce îmbină frumusețea clasică cu elemente moderne. Cu o carieră impresionantă în domeniu, Claudia se mândrește cu o mulțime de cliente mulțumite și loiale, care se întorc mereu pentru stilul ei distinctiv și profesionist.</p>
+
+                        <button class="button"  onclick="openModal('gallery4')">Vezi munca</button>
+                    </div>
+                </div>
+                <div class="card swiper-slide">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="/media/stilist5.webp" alt="" class="card-img">
+                            </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Radu Andrei</h2>
+                        <p class="description">Andrei Radu este un hairstilist talentat și dedicat, cu o carieră strălucită în arta coafurii masculine. Recunoscut pentru tehnicile sale și creativitatea sa, Andrei transformă fiecare vizită la salon într-o experiență de neuitat, oferind fiecărui client un look impecabil.</p>
+
+                        <button class="button"  onclick="openModal('gallery5')">Vezi munca</button>
+                    </div>
+                </div>
+                <div class="card swiper-slide">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="/media/cosmetician1.jpg" alt="" class="card-img">
+                            </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Anca Marinescu</h2>
+                        <p class="description"> Anca Marinescu este o expertă în arta cosmeticii, dedicată să ofere cele mai bune servicii de îngrijire și răsfăț. Cu un simț estetic rafinat și o abordare personalizată, Anca se asigură că fiecare clientă pleacă de la salon cu o piele radiantă și un zâmbet pe buze.</p>
+
+                        <button class="button"  onclick="openModal('gallery6')">Vezi munca</button>
+                    </div>
+                </div>
+                <div class="card swiper-slide">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="/media/cosmetician2.png" alt="" class="card-img">
+                            </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Raluca Dumitrescu</h2>
+                        <p class="description">Raluca Dumitrescu este o cosmeticiana pasionată de îngrijirea pielii și de frumusețea naturală. Cu o experiență vastă în tratamente faciale și makeup profesional, Raluca aduce un plus de strălucire fiecărui ten pe care îl îngrijește, folosind tehnici inovatoare.</p>
+
+                        <button class="button"  onclick="openModal('gallery7')">Vezi munca</button>
+                    </div>
+                </div>
+                <div class="card swiper-slide">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="/media/manichiurist1.jpg" alt="" class="card-img">
+                            </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Gabriela Tudor</h2>
+                        <p class="description">Gabriela Tudor este o manichiuristă dedicată, cu o expertiză remarcabilă în îngrijirea și decorarea unghiilor. Folosind tehnici moderne și produse de înaltă calitate, Gabriela oferă servicii de manichiură și pedichiură care îmbină stilul cu sănătatea și frumusețea naturală a unghiilor.</p>
+
+                        <button class="button"  onclick="openModal('gallery8')">Vezi munca</button>
+                    </div>
+                </div>
+                <div class="card swiper-slide">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="/media/manichiurist2.webp" alt="" class="card-img">
+                            </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Ioana Georgescu</h2>
+                        <p class="description">Ioana Georgescu este o manichiuristă talentată, cunoscută pentru creativitatea și precizia sa în realizarea manichiurilor perfecte. Cu o pasiune pentru designul unghiilor și o atenție deosebită la detalii, Ioana reușește să transforme fiecare set de unghii într-o operă de artă.</p>
+
+                        <button class="button"  onclick="openModal('gallery9')">Vezi munca</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="swiper-button-next swiper-navBtn"></div>
+        <div class="swiper-button-prev swiper-navBtn"></div>
+        <div class="swiper-pagination"></div>
+     </div>
+
+     <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="gallery1" class="gallery">
+                <img src="/media/stilist1munca1.jpg" alt="Work 1">
+                <img src="/media/stilist1munca2.png" alt="Work 2">
+                <img src="/media/stilist1munca3.webp" alt="Work 3">
+            </div>
+           
+            <div id="gallery2" class="gallery">
+                <img src="/media/stilist2munca1.jpg" alt="Work 1">
+                <img src="/media/stilist2munca2.jpg" alt="Work 2">
+                <img src="/media/stilist2munca3.jpg" alt="Work 3">
+            </div>
+            
+            <div id="gallery3" class="gallery">
+                <img src="/media/stilist3munca1.webp" alt="Work 1">
+                <img src="/media/stilist3munca2.webp" alt="Work 2">
+                <img src="/media/stilist3munca3.jpg" alt="Work 3">
+            </div>
+            
+            <div id="gallery4" class="gallery">
+                <img src="/media/stilist4munca1.jpg" alt="Work 1">
+                <img src="/media/stilist4munca2.webp" alt="Work 2">
+                <img src="/media/stilist4munca3.jpeg" alt="Work 3">
+            </div>
+            
+            <div id="gallery5" class="gallery">
+                <img src="/media/stilist5munca1.webp" alt="Work 1">
+                <img src="/media/stilist5munca2.jpg" alt="Work 2">
+                <img src="/media/stilist5munca3.jpg" alt="Work 3">
+            </div>
+            
+            <div id="gallery6" class="gallery">
+                <img src="/media/cosmetician1munca1.jpg" alt="Work 1">
+                <img src="/media/cosmetician1munca2.jpeg" alt="Work 2">
+                <img src="/media/cosmetician1munca3.jpeg" alt="Work 3">
+            </div>
+            
+            <div id="gallery7" class="gallery">
+                <img src="/media/cosmetician2munca1.jpeg" alt="Work 1">
+                <img src="/media/cosmetician2munca2.jpeg" alt="Work 2">
+                <img src="/media/cosmetician2munca3.jpeg" alt="Work 3">
+            </div>
+
+            <div id="gallery8" class="gallery">
+                <img src="/media/manichiurist1munca1.jpg" alt="Work 1">
+                <img src="/media/manichiurist1munca2.jpg" alt="Work 2">
+                <img src="/media/manichiurist1munca3.png" alt="Work 3">
+            </div>
+
+            <div id="gallery9" class="gallery">
+                <img src="/media/manichiurist2munca1.jpg" alt="Work 1">
+                <img src="/media/manichiurist2munca2.jpg" alt="Work 2">
+                <img src="/media/manichiurist2munca3.jpeg" alt="Work 3">
+            </div>
+            
+        </div>
+    </div>
+
+     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+var swiper = new Swiper (".slide-content", {
+    slidesPerView: 3,
+    spaceBetween: 25,
+    loop: true,
+    centreSlide:'true',
+    fade: 'true',
+    grabCursor: 'true',
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+        dynamicBullets: true,
+    },
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+    breakpoints:{
+        0: {
+            slidesPerView: 1,
+        },
+        
+        520: {
+            slidesPerView: 2,
+        },
+
+        950: {
+            slidesPerView: 3,
+        },
+    },
+});
+function openModal(galleryId) {
+            var modal = document.getElementById("myModal");
+            var galleries = document.querySelectorAll('.gallery');
+            galleries.forEach(function(gallery) {
+                gallery.style.display = 'none';
+            });
+            document.getElementById(galleryId).style.display = 'block';
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById("myModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        $(document).ready(function() {
+
+            $('.dropdown').hover(function(){
+                $('.dropdown-content').css('display', 'block');
+            }, function(){
+                $('.dropdown-content').css('display', 'none');
+            });
+        });
+</script>
+   
+</body>
+</html>

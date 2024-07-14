@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pagina de Contact</title>
+    <link href='https://fonts.googleapis.com/css?family=GFS Didot' rel='stylesheet'>
+    <style>
+        .menu {
+  border: 1px solid black;
+  width: 50px;
+  height: 50px;
+  border-radius: 0;
+}
+a {
+            text-decoration: none;
+            color: rgb(27, 27, 27);
+            transition: 0.5s ease;
+        }
+
+
+    .login-btn-container {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            z-index: 999; 
+            font-family: 'GFS Didot';
+           
+        }
+
+        .login-btn, .register-btn {
+    display: inline-block;
+    padding: 12.5px 15px;
+    margin-right: 10px;
+    border: 0px solid rgb(255, 255, 255);
+    border-radius: 2px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    color: black; 
+    text-decoration: none; 
+}
+
+
+        .login-btn:hover, .register-btn:hover {
+            background-color: #f1f1f1;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            padding: 12.5px 15px;
+            margin-right: 10px;
+            border: 0px solid rgb(255, 255, 255);
+            border-radius: 2px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 25px;
+            font-weight: bold;
+            
+        }
+
+        .logout-btn:hover {
+            background-color: #f1f1f1;
+        }
+
+        .account-icon {
+            width: 30px; 
+            height: auto; 
+            margin-left: 300px;
+            margin-top: 76px; 
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 10%;
+            left: 3%;
+        }
+
+        .dropbtn {
+            background-color: white;
+            color: black;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 4;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            z-index: 4;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: white;
+        }
+
+        .dropbtn::before, .dropbtn::after {
+            content: "";
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: black;
+            margin: 0 auto;
+            margin-top: -8px;
+        }
+
+        .dropbtn::after {
+            margin-top: 8px;
+        }
+    
+  body{
+    
+   background-color:transparent;
+   font-family: 'GFS Didot';
+
+  }
+        .wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+            {% if request.user.is_authenticated %}
+            margin-top: 80px;
+            {% else %}
+            margin-top: 190px;
+            {% endif %}
+            margin-left: 200px;
+            font-family: 'GFS Didot';
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .content-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+        }
+
+
+        .text-box{
+            background-color: rgba(255, 255, 255, 0.8); 
+            padding: 20px;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .map-container {
+            margin-left: 20px; 
+        }
+
+
+        .map-container iframe {
+            border: 0;
+            width: 400px;
+            height: 600px;
+        }
+
+
+        .faq {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .faq li {
+            margin-bottom: 10px;
+        }
+
+        .faq li .question {
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        
+        .faq li .answer {
+            display: none;
+        }
+
+        .faq li.active .answer {
+            display: block;
+        }
+        .map-container{
+            position: relative;
+
+        }
+       
+
+        
+    </style>
+</head>
+<body>
+    <img src="/media/s1.jpg" alt="Uploaded Image" style="position: absolute; top: 23%; left: 0; width: 100%; height: 100%; background-color: grey;">
+	<img src="/media/llogo.png" alt="Uploaded Image"style="position: absolute; top: 0; left: 67%; width: 30%; height: 22%; ">
+
+    <div class="login-btn-container">
+        {% if request.user.is_authenticated %}
+           <a class="logout-btn" href="/logout/">Log Out</a>
+        {% else %}
+           <a class="login-btn" href="/login/">Log In</a>
+           <a class="register-btn" href="/register/">Register</a>
+        {% endif %}
+    </div>
+    <div class="icon">
+      {% if request.user.is_authenticated %}
+                <img class="account-icon" src="/media/accounticon.png" alt="Account Icon">
+      {% endif %}
+    </div>
+    
+      <div class="dropdown">
+        <button class="dropbtn"></button>
+        <div class="dropdown-content">
+          <a href="/">Home</a>
+          <a href="/prices/">Preturi</a>
+          <a href="/app/">Programari</a>
+          <a href="/employee/">Angajati</a>
+          {% if request.user.is_authenticated %}
+          <a href="/offers/">Oferte</a>
+          <a href="/accounts/">Cont</a>
+          {% endif %}
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+ 
+<div class="wrapper">
+    <div class="content-container">
+        <div class="text-box">
+        <section class="section">
+            <h2>Informații de contact</h2>
+            <p>Email: <a href="mailto:contact@exemplu.com">contact@salonbeautyconcept.com</a></p>
+            <p>Telefon: +40 21 123 4567</p>
+            <p>Adresă: Strada Gheorghe Mandrea Arhitect 25, Sector 2, Bucuresti</p>
+        </section>
+
+      
+
+        <section class="section">
+            <h2>Întrebări frecvente</h2>
+            <ul class="faq">
+                <li>
+                    <div class="question">Ce produse sau branduri de produse folosiți în salonul dvs.?</div>
+                    <div class="answer">La salonul nostru, folosim o gamă variată de produse premium și de înaltă calitate, adaptate nevoilor specifice ale fiecărui client. Lucrăm cu branduri recunoscute și apreciate în industria frumuseții, precum L'Oréal, Redken, Schwarzkopf și Wella, încercând să selectăm produse care să ofere rezultate optime și să îmbunătățească starea generală a părului, pielii și unghiilor</div>
+                </li>
+                <li>
+                    <div class="question">Oferiți pachete sau reduceri pentru mai multe servicii combinate?</div>
+                    <div class="answer">Clientilor carora au cont pe plaforma noastra le furnizam saptamanal oferte</div>
+                </li>
+                <li>
+                    <div class="question">Trebuie să fac o programare în avans sau acceptați și clienți fără programare?</div>
+                    <div class="answer">Acceptam si clienti fara programare daca atunci cand ajugeti la salon nostru exista locuri disponibile, daca locurile sunt ocupate putem sa va ajutam cu o programare pentru o vizita ulterioara</div>
+                </li>
+                
+            </ul>
+        </section>
+        </div>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2848.9361486458856!2d26.13694307604608!3d44.4344719710758!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1fed6a4b90e1d%3A0x516a4062ea52e2ed!2sStrada%20Gheorghe%20Mandrea%2025%2C%20Bucure%C8%99ti!5e0!3m2!1sro!2sro!4v1719494241627!5m2!1sro!2sro" width="400" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</div>
+
+    
+    
+    <script>
+        function toggleAnswer(event) {
+            const question = event.currentTarget;
+            const answer = question.nextElementSibling;
+
+            question.parentNode.classList.toggle('active');
+
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+            } else {
+                answer.style.display = 'block';
+            }
+        }
+
+        const questions = document.querySelectorAll('.faq li .question');
+        questions.forEach(question => {
+            question.addEventListener('click', toggleAnswer);
+        });
+    </script>
+</body>
+</html>

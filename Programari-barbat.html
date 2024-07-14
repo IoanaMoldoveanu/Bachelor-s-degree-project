@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+    <title>Programari barbati</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=GFS Didot' rel='stylesheet'>
+
+<style>
+    .menu {
+  border: 1px solid black;
+  width: 50px;
+  height: 50px;
+  border-radius: 0;
+}
+
+a {
+            text-decoration: none;
+            color: rgb(27, 27, 27);
+            transition: 0.5s ease;
+        }
+
+.login-btn-container {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            z-index: 999;
+            font-family: 'GFS Didot';
+           
+        }
+
+        .login-btn, .register-btn {
+    display: inline-block;
+    padding: 12.5px 15px;
+    margin-right: 10px;
+    border: 0px solid rgb(255, 255, 255);
+    border-radius: 2px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    color: black; 
+    text-decoration: none; 
+}
+
+
+        .login-btn:hover, .register-btn:hover {
+            background-color: #f1f1f1;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            padding: 12.5px 15px;
+            margin-right: 10px;
+            border: 0px solid rgb(255, 255, 255);
+            border-radius: 2px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 25px;
+            font-weight: bold;
+            
+        }
+
+        .logout-btn:hover {
+            background-color: #f1f1f1;
+        }
+
+        .account-icon {
+            width: 30px; 
+            height: auto; 
+            margin-left: 300px;
+            margin-top: 35px; 
+        }
+
+
+        .dropdown {
+            position: absolute;
+            top: 10%;
+            left: 3%;
+        }
+
+        .dropbtn {
+            background-color: white;
+            color: black;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 4;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            z-index: 4;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: white;
+        }
+
+        .dropbtn::before, .dropbtn::after {
+            content: "";
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: black;
+            margin: 0 auto;
+            margin-top: -8px;
+        }
+
+        .dropbtn::after {
+            margin-top: 8px;
+        }
+
+    body {
+      background-color: #ffffff;
+    background-image: url('/media/s1.jpg'); 
+    background-size: cover; 
+    background-position: center;
+    font-family: 'GFS Didot';
+    margin: 0;
+    padding: 0;
+    height: 100vh; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    }
+  .options-container button {
+    
+      padding: 10px 20px; 
+      font-size: 24px;
+      position: relative;
+      z-index: 2;
+      margin-left: 30px;
+      display: inline-block;
+     background-color: white;
+      color: black;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'GFS Didot';
+      
+    }
+    .options-container {
+  display: flex;
+  justify-content: flex-start; 
+  margin-top: 25px;
+  left: 30%;
+  font-family: 'GFS Didot';
+}
+
+.services-table {
+ 
+  position: relative;
+  z-index: 2;
+  padding: 10px 20px; 
+  font-size: 30px;
+  margin-left: 70px; 
+  left: 30%;
+  font-family: 'GFS Didot';
+}
+
+.visible {
+  display: block !important;
+}
+#services-list {
+  list-style-type: none;
+}
+
+#services-table1, #services-table2, #services-table3, #services-table4, #services-table5, #services-table6, #services-table7{
+  background-color: rgba(255,255,255,0.5);
+  width:30%;
+  top: 20%;
+}
+ 
+ .submit-button {
+    font-family: 'GFS Didot';
+        background-color: black;
+        color: white;
+        padding: 20px 30px;
+        font-size: 25px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        z-index: 3;
+        transition: background-color 0.3s ease, opacity 0.3s ease;
+        
+    }
+
+    .submit-button:hover {
+        background-color: rgb(25, 24, 24);
+        opacity: 0.8;
+        position: relative;
+        z-index: 3;
+    }
+    .form-container {
+  margin-top: 150px;
+  margin-left: 650px;
+}
+.header-container {
+    background-color: white;
+    border-bottom: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    width:97.4%;
+    height: 150px;
+}
+.logo {
+    width: 30%;
+    height: auto;
+}
+
+
+</style>
+
+
+
+</head>
+<body>
+  <div class="header-container">
+	<img src="/media/llogo.png" alt="Uploaded Image" style="position: absolute; top: 0; left: 67%; width: 30%; height: 22%; ">
+
+  <div class="login-btn-container">
+    {% if request.user.is_authenticated %}
+       <a class="logout-btn" href="/logout/">Log Out</a>
+    {% else %}
+       <a class="login-btn" href="/login/">Log In</a>
+       <a class="register-btn" href="/register/">Register</a>
+    {% endif %}
+</div>
+<div class="icon">
+  {% if request.user.is_authenticated %}
+            <img class="account-icon" src="/media/accounticon.png" alt="Account Icon">
+  {% endif %}
+</div>
+
+  <div class="dropdown-container">
+    <div class="dropdown">
+    <button class="dropbtn"></button>
+    <div class="dropdown-content">
+      <a href="/">Home</a>
+      <a href="/prices/">Preturi</a>
+      <a href="/app/">Programari</a>
+      <a href="/employee/">Angajati</a>
+      {% if request.user.is_authenticated %}
+      <a href="/offers/">Oferte</a>
+      <a href="/accounts/">Cont</a>
+  {% endif %}
+      <a href="/contact/">Contact</a>
+    </div>
+  </div>
+  </div>
+</div>
+  <div class="options-container">
+    <button data-target="services-table1">Tuns și coafat</button>
+    <button data-target="services-table2">Îngrijirea și tunderea bărbii</button>
+    <button data-target="services-table3">Bărbierit</button>
+    <button data-target="services-table4">Tratamente faciale</button>
+    <button data-target="services-table5">Manichiură/pedichiură</button>
+    <button data-target="services-table6">Masaj</button>
+    <button data-target="services-table7">Vopsirea părului</button>
+  </div>
+  <div id="services-table1" class="services-table" style="display: none;">
+    <h2>Selectează servicii:</h2>
+    <ul id="services-list">
+      <li><label><input type="checkbox" name="selected_services" value="Tuns clasic"> Tuns clasic</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Tuns modern"> Tuns modern</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Tuns fade"> Tuns fade</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Tuns scurt"> Tuns scurt</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Spălat și coafat"> Spălat și coafat</label></li>
+   
+
+    </ul>
+</div>
+<div id="services-table2" class="services-table" style="display: none;">
+    <h2>Selectează servicii:</h2>
+    <ul id="services-list">
+      <li><label><input type="checkbox" name="selected_services" value="Tunderea bărbii"> Tunderea bărbii</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Modelarea bărbii"> Modelarea bărbii</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Îngrijirea bărbii cu produse speciale"> Îngrijirea bărbii cu produse speciale</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Tunderea și modelarea bărbii"> Tunderea și modelarea bărbii</label></li>
+     
+ 
+    </ul>
+  </div>
+  <div id="services-table3" class="services-table" style="display: none;">
+    <h2>Selectează servicii:</h2>
+    <ul id="services-list">
+      <li><label><input type="checkbox" name="selected_services" value="Bărbierit clasic cu spumă"> Bărbierit clasic cu spumă</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Bărbierit cu prosop fierbinte"> Bărbierit cu prosop fierbinte</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Bărbierit cu brici"> Bărbierit cu brici</label></li>
+
+  
+    </ul>
+  </div>
+  <div id="services-table4" class="services-table" style="display: none;">
+    <h2>Selectează servicii:</h2>
+    <ul id="services-list">
+      <li><label><input type="checkbox" name="selected_services" value="Curățare profundă"> Curățare profundă</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Exfoliere și hidratare"> Exfoliere și hidratare</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Tratament anti-îmbătrânire"> Tratament anti-îmbătrânire</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Tratament pentru tenul sensibil"> Tratament pentru tenul sensibil</label></li>
+
+   
+    </ul>
+  </div>
+  <div id="services-table5" class="services-table" style="display: none;">
+    <h2>Selectează servicii:</h2>
+    <ul id="services-list">
+      <li><label><input type="checkbox" name="selected_services" value="Manichiură clasică"> Manichiură clasică</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Manichiură cu gel"> Manichiură cu gel</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Pedichiură clasică"> Pedichiură clasică</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Pedichiură cu gel"> Pedichiură cu gel</label></li>
+
+    </ul>
+  </div>
+  <div id="services-table6" class="services-table" style="display: none;">
+    <h2>Selectează servicii:</h2>
+    <ul id="services-list">
+      <li><label><input type="checkbox" name="selected_services" value="Masaj suedez 50 min"> Masaj suedez 50 min</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Masaj profund al țesuturilor 50 min"> Masaj profund al țesuturilor 50 min</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Masaj sportiv 60 min"> Masaj sportiv 60 min</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Masaj de relaxare 60 min"> Masaj de relaxare 60 min</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Masaj terapeutic 60 min"> Masaj terapeutic 60 min</label></li>
+ 
+    </ul>
+  </div>
+  <div id="services-table7" class="services-table" style="display: none;">
+    <h2>Selectează servicii:</h2>
+    <ul id="services-list">
+      <li><label><input type="checkbox" name="selected_services" value="Acoperirea firelor albe"> Acoperirea firelor albe</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Șuvițe"> Șuvițe</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Vopsirea completă a părului"> Vopsirea completă a părului</label></li>
+      <li><label><input type="checkbox" name="selected_services" value="Vopsire semi-permanentă"> Vopsire semi-permanentă</label></li>
+      
+ 
+    </ul>
+  </div>
+  <div class="form-container">
+    <button class="submit-button" type="submit">Submit</button>
+</div>
+  </form>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+
+
+  $(document).ready(function() {
+      $(".options-container button").click(function() {
+        var targetId = $(this).data("target");
+        $(".services-table").hide();
+        $("#" + targetId).show();
+      });
+    });
+  </script>
+</body>
+</html>
